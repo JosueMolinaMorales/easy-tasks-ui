@@ -1,10 +1,16 @@
 import { persisted } from 'svelte-persisted-store';
 
 export interface User {
-	email: string;
-	username: string;
-	firstname: string;
-	lastname: string;
+	family_name: string;
+	given_name: string;
+	iat: number;
+	iss: string;
+	name: string;
+	nickname: string;
+	picture: string;
+	sid: string;
+	sub: string;
+	updated_at: string;
 }
 
 export interface Task {
