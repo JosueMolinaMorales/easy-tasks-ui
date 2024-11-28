@@ -16,8 +16,6 @@
 	import { page } from '$app/stores';
 	import type { User } from '../../stores';
 
-	export let defaultModal;
-
 	$: activeUrl = $page.url.pathname;
 	$: gravUrl = $gravatarUrl;
 
@@ -26,6 +24,11 @@
 		user.set({} as User);
 		token.set('');
 		gravatarUrl.set('');
+	}
+
+	async function onAuthClick() {
+		console.log('[DEBUG] CALLING LOGIN ROUTE');
+		window.location.href = 'http://localhost:3000/auth/login';
 	}
 
 	let activeClass =
@@ -52,7 +55,7 @@
 					<DropdownItem on:click={signOut}>Sign out</DropdownItem>
 				</Dropdown>
 			{:else}
-				<Button size="sm" on:click={() => (defaultModal = true)}>Login/Sign Up</Button>
+				<Button size="sm" on:click={onAuthClick}>Login/Sign Up</Button>
 			{/if}
 			<DarkMode />
 			<NavHamburger />

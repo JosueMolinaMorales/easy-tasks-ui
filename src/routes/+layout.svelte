@@ -68,7 +68,7 @@
 	let openSignUp = false;
 </script>
 
-<Navbar bind:defaultModal></Navbar>
+<Navbar></Navbar>
 
 <Modal size="xs" class="w-full" bind:open={defaultModal} autoclose={false} outsideclose>
 	<form on:submit|preventDefault={login} class="flex flex-col space-y-6">
