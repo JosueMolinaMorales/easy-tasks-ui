@@ -16,24 +16,23 @@
 			return acc;
 		}, {});
 
-		if (cookies['auth-session']) {
-			console.log('[DEBUG] AUTH SESSION EXISTS');
-			isLoggedIn = true;
-			const res = await fetch('http://localhost:3000/auth/user', {
-				headers: {
-					'Access-Control-Allow-Origin': '*'
-				},
-				credentials: 'include'
-			});
-			const profile = await res.json();
-			console.log('[DEBUG] PROFILE FROM /auth/users: ', profile);
-
-			$user = profile;
-			console.log('[DEBUG} profile picture: ', profile.picture.trim());
-			gravatarUrl.set(profile.picture.trim());
+		if (!cookies['auth-session']) {
+			return;
 		}
+		console.log('[DEBUG] AUTH SESSION EXISTS');
+		isLoggedIn = true;
+		const userRes = await fetch('http://localhost:3000/auth/user', {
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			},
+			credentials: 'include'
+		});
+		const profile = await userRes.json();
+		console.log('[DEBUG] PROFILE FROM /auth/users: ', profile);
 
-		console.log('[DEBUG] onMount');
+		$user = profile;
+		console.log('[DEBUG} profile picture: ', profile.picture.trim());
+		gravatarUrl.set(profile.picture.trim());
 		// TODO: Fetch tasks from API
 		const res = await fetch('http://localhost:3000/tasks', {
 			method: 'GET',
@@ -49,12 +48,7 @@
 			tasks = data;
 			console.log('[DEBUG] tasks: ', tasks);
 		}
-	});
-
-	user.subscribe((value) => {
-		console.log('[DEBUG] value: ', value);
-		console.log('[DEBUG] isLoggedIn: ', Object.keys(value).length > 0);
-		isLoggedIn = Object.keys(value).length > 0;
+		console.log('[DEBUG] onMount');
 	});
 
 	let priorites: { [key: string]: ColorVariant } = {
